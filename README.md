@@ -1,57 +1,73 @@
-[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/9mmcceRj)
-# NodeJS - Midterm Project
+# React + TypeScript + Vite
 
-**Goal:** Create a site with BREAD (Browse, Read, Edit, Add, Delete) functionality using Node.js and Express as backend and a frontend of your choice. A user must be able to register, login, display, add, edit, and delete items.
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-## Instructions 📖
+Currently, two official plugins are available:
 
-- You are free to create any type of site as long as it has CRUD/BREAD functionality and using MVC pattern.
-- Keep the database in-memory or inside a model (No external database).
-- The site must have login and signup.
-- Use TypeScript.
-- Use `bcrypt` package to hash and verify the password [https://www.npmjs.com/package/bcrypt].
-- Use `uuid` package to generate unique ids.
-- Use cookie session to keep user information in the browser after they login. Clear the cookies when they log out.
-- Create middleware so that BREAD routes are only accessible if the user is authenticated or logged in.
-- You can choose to build your frontend/view using Astro, EJS (not preferable), or another library such as React if you prefer.
-- Design your web application in Figma.
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-### Example Routes and Requests
+## React Compiler
 
-- **Browse:** `GET /posts`
-- **Read:** `GET /posts/1`
-- **Search:** `GET /posts/search?q=keyword`
-- **Edit:** `PUT /posts/1`
-- **Add:** `POST /posts`
-- **Delete:** `DELETE /posts/1`
----
-- **Register** `POST /users/register`
-- **Login** `POST /users/login`
+The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
 
-## Sample Ideas 💡
+## Expanding the ESLint configuration
 
-- Online Store
-- Blog
-- To-Do App
-- Employee Management System
-- Music Player
-- Movies App
-- Recipe App
-- Diary App
+If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
 
-## Presentation 📽️
+```js
+export default defineConfig([
+  globalIgnores(['dist']),
+  {
+    files: ['**/*.{ts,tsx}'],
+    extends: [
+      // Other configs...
 
-Individual presentation will be on next Monday. During the presentation of your website, please follow this flow:
+      // Remove tseslint.configs.recommended and replace with this
+      tseslint.configs.recommendedTypeChecked,
+      // Alternatively, use this for stricter rules
+      tseslint.configs.strictTypeChecked,
+      // Optionally, add this for stylistic rules
+      tseslint.configs.stylisticTypeChecked,
 
-1. Show your Figma mockup design
-2. Signup
-3. Login
-4. Add an item
-5. Show all items in a list
-6. View individual item (by clicking a button or link)
-7. Search item by keyword
-8. Edit item
-9. Delete item
-10. Log out
+      // Other configs...
+    ],
+    languageOptions: {
+      parserOptions: {
+        project: ['./tsconfig.node.json', './tsconfig.app.json'],
+        tsconfigRootDir: import.meta.dirname,
+      },
+      // other options...
+    },
+  },
+])
+```
 
-Good luck! 🎉🎉🎉
+You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+
+```js
+// eslint.config.js
+import reactX from 'eslint-plugin-react-x'
+import reactDom from 'eslint-plugin-react-dom'
+
+export default defineConfig([
+  globalIgnores(['dist']),
+  {
+    files: ['**/*.{ts,tsx}'],
+    extends: [
+      // Other configs...
+      // Enable lint rules for React
+      reactX.configs['recommended-typescript'],
+      // Enable lint rules for React DOM
+      reactDom.configs.recommended,
+    ],
+    languageOptions: {
+      parserOptions: {
+        project: ['./tsconfig.node.json', './tsconfig.app.json'],
+        tsconfigRootDir: import.meta.dirname,
+      },
+      // other options...
+    },
+  },
+])
+```

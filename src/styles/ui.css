@@ -1,0 +1,14 @@
+/* ===== SHADCN UI LAYERS ===== */
+
+@layer base {
+    :root {
+      --radius: 0.5rem;
+    }
+  }
+  
+  @layer components {
+    .btn {
+      @apply inline-flex items-center justify-center rounded-md px-4 py-2 font-medium transition-colors;
+    }
+  }
+  
